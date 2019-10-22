@@ -1,18 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>Bucket List（やりたいこと、やるべきこと、やれること）</h1>
+    <p>死ぬまでにやっておきたいことの一覧</p>
+    <p>お互いの思いを共有し、一緒にやること、別々にやることを決めましょう</p>
   </div>
 </template>
-
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
-export default {
-  name: "home",
-  components: {
-    HelloWorld
-  }
-};
-</script>

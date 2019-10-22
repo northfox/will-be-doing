@@ -1,32 +1,31 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="navbar-nav">
+        <router-link class="navbar-brand" to="/">Will-Be-Doing</router-link>
+        <router-link class="nav-link" exact-active-class="active" to="/touch"
+          >触りたいもの</router-link
+        >
+        <router-link class="nav-link" exact-active-class="active" to="/taste"
+          >食べたいもの</router-link
+        >
+        <router-link class="nav-link" exact-active-class="active" to="/hearing"
+          >聴きたいもの</router-link
+        >
+        <router-link class="nav-link" exact-active-class="active" to="/eyesight"
+          >見たいもの</router-link
+        >
+        <router-link class="nav-link" exact-active-class="active" to="/smell"
+          >嗅ぎたいもの</router-link
+        >
+      </div>
+    </nav>
     <router-view />
   </div>
 </template>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
