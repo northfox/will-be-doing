@@ -4,7 +4,6 @@
       <thead class="thead-light">
         <tr>
           <th>#</th>
-          <th>タイトル</th>
           <th>内容</th>
           <th>いいね数</th>
           <th>完了日</th>
@@ -14,7 +13,14 @@
         </tr>
       </thead>
       <tbody>
-        <Touch :touch="touch" v-for="touch in touches" :key="touch.id"></Touch>
+        <Touch
+          :touch="touch"
+          v-for="touch in touches"
+          :key="touch.id"
+          @itemIine="oneIine"
+          @itemDone="oneDone"
+          @itemRemove="oneRemove"
+        ></Touch>
       </tbody>
     </table>
   </div>
@@ -30,6 +36,23 @@ export default {
   },
   props: {
     touches: Array
+  },
+  methods: {
+    oneIine: function(id) {
+      this.touches[id].star += 1;
+      this.$emit("oneUpdate", id, "whoami");
+    },
+    oneDone: function(id) {
+      let doneBy = prompt("誰がやった？") || "";
+      this.touches[id].done_at = new Date();
+      this.touches[id].done_by = doneBy;
+      this.$emit("oneUpdate", id, doneBy);
+    },
+    oneRemove: function(id) {
+      if (confirm("本当に削除する？")) {
+        this.touches.splice(id, 1);
+      }
+    }
   }
 };
 </script>

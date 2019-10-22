@@ -1,7 +1,6 @@
 <template>
   <tr>
     <td>{{ touch.id }}</td>
-    <td>{{ touch.title }}</td>
     <td>{{ touch.content }}</td>
     <td>
       <svg
@@ -15,7 +14,7 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         stroke-width="2"
-        @click="iine"
+        @click="iine(touch.id)"
       >
         <path
           d="M4 16 C1 12 2 6 7 4 12 2 15 6 16 8 17 6 21 2 26 4 31 6 31 12 28 16 25 20 16 28 16 28 16 28 7 20 4 16 Z"
@@ -26,10 +25,14 @@
     <td>{{ touch.done_at }}</td>
     <td>{{ touch.done_by }}</td>
     <td>
-      <button class="btn btn-sm btn-success" @click="done">Done</button>
+      <button class="btn btn-sm btn-success" @click="done(touch.id)">
+        Done
+      </button>
     </td>
     <td>
-      <button class="btn btn-sm btn-danger" @click="deleteItem">Delete</button>
+      <button class="btn btn-sm btn-danger" @click="remove(touch.id)">
+        Delete
+      </button>
     </td>
   </tr>
 </template>
@@ -41,17 +44,14 @@ export default {
     touch: Object
   },
   methods: {
-    iine: function() {
-      this.touch.star += 1;
+    iine: function(id) {
+      this.$emit("itemIine", id);
     },
-    done: function() {
-      let doneBy = prompt("誰がやった？");
-      this.touch.done_at = new Date();
-      this.touch.done_by = doneBy;
+    done: function(id) {
+      this.$emit("itemDone", id);
     },
-    deleteItem: function() {
-      alert("delete");
-      this.touch = {};
+    remove: function(id) {
+      this.$emit("itemRemove", id);
     }
   }
 };

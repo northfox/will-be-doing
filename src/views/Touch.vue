@@ -10,26 +10,15 @@
         <section>
           <form>
             <div class="form-group">
-              タイトル
+              内容
               <input
                 type="text"
                 class="form-control form-control-sm"
                 required="required"
-                v-model="touch.title"
+                v-model="touch.content"
               />
             </div>
-            <div class="form-group">
-              内容
-              <textarea
-                cols="50"
-                rows="5"
-                class="form-control form-control-sm"
-                required="required"
-                v-model="touch.content"
-              >
-              </textarea>
-            </div>
-            <button class="btn btn-primary btn-sm" @click="save">
+            <button class="btn btn-primary btn-sm" @click="itemSave">
               新規追加
             </button>
           </form>
@@ -40,7 +29,7 @@
       <div class="col">
         <section>
           <h2>一覧</h2>
-          <Touches :touches="touches"></Touches>
+          <Touches :touches="touches" @oneUpdate="itemUpdate"></Touches>
         </section>
       </div>
     </div>
@@ -52,9 +41,27 @@
 import Touches from "@/components/Touches.vue";
 
 const STORAGE_KEY = "will-be-doing";
+let touchesRepository = {
+  fetch: function() {
+    let touches = JSON.parse(localStorage.getItem(STORAGE_KEY) || []);
+    touches.forEach((touch, index) => {
+      touch.id = index;
+    });
+    touches.uid = touches.length;
+    return touches;
+  },
+  save: function(touches) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(touches));
+  },
+  remove: function(index) {
+    let touches = this.fetch();
+    touches.splice(index, 1);
+    this.save(touches);
+  }
+};
 
 export default {
-  name: "home",
+  name: "touches",
   components: {
     Touches
   },
@@ -63,7 +70,6 @@ export default {
       touches: [
         {
           id: 0,
-          title: "タイトル",
           content: "内容",
           star: 0,
           created_at: "2019/10/01",
@@ -76,7 +82,6 @@ export default {
       ],
       touch: {
         id: 0,
-        title: "",
         content: "",
         star: 0,
         created_at: "",
@@ -89,20 +94,20 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem(STORAGE_KEY)) {
-      try {
-        this.touches = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      } catch (e) {
-        console.log(e);
-        localStorage.removeItem(STORAGE_KEY);
-      }
+    this.touches = touchesRepository.fetch();
+  },
+  watch: {
+    touches: {
+      handler: function(newTouches) {
+        touchesRepository.save(newTouches);
+      },
+      deep: true
     }
   },
   methods: {
-    save: function() {
+    itemSave: function() {
       let touch = {
         id: this.touches.length,
-        title: this.touch.title,
         content: this.touch.content,
         star: 0,
         created_at: new Date(),
@@ -111,14 +116,14 @@ export default {
         updated_by: "K"
       };
       this.touches.push(touch);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.touches));
+      touchesRepository.save(this.touches);
       this.touch = {};
       return;
-    }
-  },
-  watch: {
-    touches: function(newTouches) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newTouches));
+    },
+    itemUpdate: function(id, user) {
+      this.touches[id].updated_at = new Date();
+      this.touches[id].updated_by = user;
+      return;
     }
   }
 };
