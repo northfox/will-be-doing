@@ -8,6 +8,7 @@
           class="form-control form-control-sm"
           v-model="touch.content"
           @blur="isContentEditable = false"
+          @keydown.enter="isContentEditable = false"
           v-focus
         />
       </span>
