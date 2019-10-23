@@ -3,8 +3,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="navbar-nav">
         <router-link class="navbar-brand" to="/">Will-Be-Doing</router-link>
-        <router-link class="nav-link" exact-active-class="active" to="/touch"
-          >触りたいもの</router-link
+        <router-link class="nav-link" exact-active-class="active" to="/touch">
+          触りたいもの</router-link
         >
         <router-link class="nav-link" exact-active-class="active" to="/taste"
           >食べたいもの</router-link
@@ -20,7 +20,7 @@
         >
       </div>
     </nav>
-    <router-view />
+    <router-view class="p-3" />
   </div>
 </template>
 

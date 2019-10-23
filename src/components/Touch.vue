@@ -1,7 +1,20 @@
 <template>
   <tr>
     <td>{{ touch.id }}</td>
-    <td>{{ touch.content }}</td>
+    <td @click="isContentEditable = true">
+      <span v-if="isContentEditable">
+        <input
+          type="text"
+          class="form-control form-control-sm"
+          v-model="touch.content"
+          @blur="isContentEditable = false"
+          v-focus
+        />
+      </span>
+      <span v-else>
+        {{ touch.content }}
+      </span>
+    </td>
     <td>
       <svg
         class="i-heart"
@@ -43,6 +56,11 @@ export default {
   props: {
     touch: Object
   },
+  data: function() {
+    return {
+      isContentEditable: false
+    };
+  },
   methods: {
     iine: function(id) {
       this.$emit("itemIine", id);
@@ -52,6 +70,13 @@ export default {
     },
     remove: function(id) {
       this.$emit("itemRemove", id);
+    }
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      }
     }
   }
 };

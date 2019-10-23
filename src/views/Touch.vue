@@ -1,8 +1,8 @@
 <template>
-  <div class="container p-3">
+  <div class="container">
     <div class="row">
       <div class="col">
-        <h1>触りたいもの</h1>
+        <h1>{{ filterSense }}</h1>
       </div>
     </div>
     <div class="row">
@@ -67,11 +67,13 @@ export default {
   },
   data: function() {
     return {
+      filterSense: "触りたいもの",
       touches: [
         {
           id: 0,
           content: "内容",
           star: 0,
+          sense: "touch",
           created_at: "2019/10/01",
           created_by: "K",
           updated_at: "2019/10/25",
@@ -84,6 +86,7 @@ export default {
         id: 0,
         content: "",
         star: 0,
+        sense: "",
         created_at: "",
         created_by: "",
         updated_at: "",
@@ -113,10 +116,11 @@ export default {
         created_at: new Date(),
         created_by: "K",
         updated_at: new Date(),
-        updated_by: "K"
+        updated_by: "K",
+        done_at: null,
+        done_by: null
       };
       this.touches.push(touch);
-      touchesRepository.save(this.touches);
       this.touch = {};
       return;
     },
