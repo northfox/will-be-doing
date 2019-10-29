@@ -42,8 +42,7 @@
       <button class="btn btn-sm btn-success" @click="done(touch.id)">
         Done
       </button>
-    </td>
-    <td>
+      |
       <button class="btn btn-sm btn-danger" @click="remove(touch.id)">
         Delete
       </button>

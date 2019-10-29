@@ -9,7 +9,6 @@
           <th>完了日</th>
           <th>完了者</th>
           <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
