@@ -113,9 +113,9 @@ export default {
         id: this.touches.length,
         content: this.touch.content,
         star: 0,
-        created_at: new Date(),
+        created_at: this.$dayjs().format("YYYY/MM/DD"),
         created_by: "K",
-        updated_at: new Date(),
+        updated_at: this.$dayjs().format("YYYY/MM/DD"),
         updated_by: "K",
         done_at: null,
         done_by: null
@@ -125,7 +125,7 @@ export default {
       return;
     },
     itemUpdate: function(id, user) {
-      this.touches[id].updated_at = new Date();
+      this.touches[id].updated_at = this.$dayjs().format("YYYY/MM/DD");
       this.touches[id].updated_by = user;
       return;
     }

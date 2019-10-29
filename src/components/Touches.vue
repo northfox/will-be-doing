@@ -44,7 +44,7 @@ export default {
     },
     oneDone: function(id) {
       let doneBy = prompt("誰がやった？") || "";
-      this.touches[id].done_at = new Date();
+      this.touches[id].done_at = this.$dayjs().format("YYYY/MM/DD");
       this.touches[id].done_by = doneBy;
       this.$emit("oneUpdate", id, doneBy);
     },
