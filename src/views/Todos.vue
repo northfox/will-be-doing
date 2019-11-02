@@ -30,7 +30,11 @@
       <div class="col">
         <section>
           <h2>一覧</h2>
-          <Todos :todos="filteredTodos" @oneUpdate="itemUpdate"></Todos>
+          <Todos
+            :todos="filteredTodos"
+            @oneUpdate="itemUpdate"
+            @oneRemove="itemRemove"
+          ></Todos>
         </section>
       </div>
     </div>
@@ -73,13 +77,15 @@ export default {
         {
           id: 0,
           taste: this.$route.params.sense,
-          content: "内容",
+          content: "ダミー内容",
           star: 0,
           sense: "todo",
           created_at: "2019/10/01",
           created_by: "K",
           updated_at: "2019/10/25",
           updated_by: "A",
+          deleted_at: null,
+          deleted_by: null,
           done_at: "2019/11/01",
           done_by: ["A", "K"]
         }
@@ -94,8 +100,10 @@ export default {
         created_by: "",
         updated_at: "",
         updated_by: "",
-        done_at: "",
-        done_by: []
+        deleted_at: null,
+        deleted_by: null,
+        done_at: null,
+        done_by: null
       }
     };
   },
@@ -123,6 +131,8 @@ export default {
         created_by: "K",
         updated_at: this.$dayjs().format("YYYY/MM/DD"),
         updated_by: "K",
+        deleted_at: null,
+        deleted_by: null,
         done_at: null,
         done_by: null
       };
@@ -138,12 +148,23 @@ export default {
         }
       });
       return;
+    },
+    itemRemove: function(id, user) {
+      this.todos.forEach(todo => {
+        if (todo.id === id) {
+          todo.deleted_at = this.$dayjs().format("YYYY/MM/DD");
+          todo.deleted_by = user;
+          this.itemUpdate(id, user);
+        }
+      });
+      return;
     }
   },
   computed: {
     filteredTodos: function() {
-      if (this.$route.params.sense === "all") return this.todos;
-      return this.todos.filter(t => t.sense === this.$route.params.sense);
+      let todos = this.todos.filter(t => t.deleted_at === null);
+      if (this.$route.params.sense === "all") return todos;
+      return todos.filter(t => t.sense === this.$route.params.sense);
     }
   },
   directives: {

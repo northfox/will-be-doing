@@ -17,7 +17,7 @@
           v-for="todo in todos"
           :key="todo.id"
           @update="todoUpdate"
-          @itemRemove="oneRemove"
+          @itemRemove="todoRemove"
         ></Todo>
       </tbody>
     </table>
@@ -40,9 +40,10 @@ export default {
       // TODO Who is updatedBy
       this.$emit("oneUpdate", id, "whoami");
     },
-    oneRemove: function(id) {
+    todoRemove: function(id) {
       if (confirm("本当に削除する？")) {
-        this.todos.splice(id, 1);
+        // TODO Who is updatedBy
+        this.$emit("oneRemove", id, "whoami");
       }
     }
   }
