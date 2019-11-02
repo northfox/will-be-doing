@@ -11,13 +11,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/touch",
-    name: "touch",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Touch.vue")
+    path: "/todos/:sense",
+    name: "todos",
+    component: () => import("../views/Todos.vue")
   }
 ];
 

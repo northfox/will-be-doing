@@ -3,19 +3,42 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="navbar-nav">
         <router-link class="navbar-brand" to="/">Will-Be-Doing</router-link>
-        <router-link class="nav-link" exact-active-class="active" to="/touch">
+        <router-link
+          class="nav-link"
+          exact-active-class="active"
+          to="/todos/all"
+        >
+          全部</router-link
+        >
+        <router-link
+          class="nav-link"
+          exact-active-class="active"
+          to="/todos/touch"
+        >
           触りたいもの</router-link
         >
-        <router-link class="nav-link" exact-active-class="active" to="/taste"
+        <router-link
+          class="nav-link"
+          exact-active-class="active"
+          to="/todos/taste"
           >食べたいもの</router-link
         >
-        <router-link class="nav-link" exact-active-class="active" to="/hearing"
+        <router-link
+          class="nav-link"
+          exact-active-class="active"
+          to="/todos/hearing"
           >聴きたいもの</router-link
         >
-        <router-link class="nav-link" exact-active-class="active" to="/eyesight"
+        <router-link
+          class="nav-link"
+          exact-active-class="active"
+          to="/todos/eyesight"
           >見たいもの</router-link
         >
-        <router-link class="nav-link" exact-active-class="active" to="/smell"
+        <router-link
+          class="nav-link"
+          exact-active-class="active"
+          to="/todos/smell"
           >嗅ぎたいもの</router-link
         >
       </div>

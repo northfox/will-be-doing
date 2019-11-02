@@ -15,7 +15,7 @@
                 type="text"
                 class="form-control form-control-sm"
                 required="required"
-                v-model="touch.content"
+                v-model="todo.content"
               />
             </div>
             <button class="btn btn-primary btn-sm" @click="itemSave">
@@ -29,7 +29,7 @@
       <div class="col">
         <section>
           <h2>一覧</h2>
-          <Touches :touches="touches" @oneUpdate="itemUpdate"></Touches>
+          <Todos :todos="filteredTodos" @oneUpdate="itemUpdate"></Todos>
         </section>
       </div>
     </div>
@@ -38,42 +38,43 @@
 
 <script>
 // @ is an alias to /src
-import Touches from "@/components/Touches.vue";
+import Todos from "@/components/Todos.vue";
 
 const STORAGE_KEY = "will-be-doing";
-let touchesRepository = {
+let todosRepository = {
   fetch: function() {
-    let touches = JSON.parse(localStorage.getItem(STORAGE_KEY) || []);
-    touches.forEach((touch, index) => {
-      touch.id = index;
+    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || []);
+    todos.forEach((todo, index) => {
+      todo.id = index;
     });
-    touches.uid = touches.length;
-    return touches;
+    todosRepository.uid = todos.length;
+    return todos;
   },
-  save: function(touches) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(touches));
+  save: function(todos) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
   },
   remove: function(index) {
-    let touches = this.fetch();
-    touches.splice(index, 1);
-    this.save(touches);
+    let todos = this.fetch();
+    todos.splice(index, 1);
+    this.save(todos);
   }
 };
 
 export default {
-  name: "touches",
+  name: "all",
   components: {
-    Touches
+    Todos: Todos
   },
   data: function() {
     return {
-      filterSense: "触りたいもの",
-      touches: [
+      filterSense: "WillBeDoing",
+      todos: [
         {
           id: 0,
+          taste: this.$route.params.sense,
           content: "内容",
           star: 0,
-          sense: "touch",
+          sense: "todo",
           created_at: "2019/10/01",
           created_by: "K",
           updated_at: "2019/10/25",
@@ -82,8 +83,9 @@ export default {
           done_by: ["A", "K"]
         }
       ],
-      touch: {
+      todo: {
         id: 0,
+        taste: this.$route.params.sense,
         content: "",
         star: 0,
         sense: "",
@@ -97,21 +99,24 @@ export default {
     };
   },
   mounted() {
-    this.touches = touchesRepository.fetch();
+    this.todos = todosRepository.fetch();
   },
   watch: {
-    touches: {
-      handler: function(newTouches) {
-        touchesRepository.save(newTouches);
+    todos: {
+      handler: function(newTodos) {
+        todosRepository.save(newTodos);
       },
       deep: true
     }
   },
   methods: {
     itemSave: function() {
-      let touch = {
-        id: this.touches.length,
-        content: this.touch.content,
+      let content = this.todo.content && this.todo.content.trim();
+      if (!content) return;
+      let todo = {
+        id: todosRepository.uid++,
+        sense: this.$route.params.sense,
+        content: content,
         star: 0,
         created_at: this.$dayjs().format("YYYY/MM/DD"),
         created_by: "K",
@@ -120,14 +125,24 @@ export default {
         done_at: null,
         done_by: null
       };
-      this.touches.push(touch);
-      this.touch = {};
+      this.todos.push(todo);
+      this.todo = {};
       return;
     },
     itemUpdate: function(id, user) {
-      this.touches[id].updated_at = this.$dayjs().format("YYYY/MM/DD");
-      this.touches[id].updated_by = user;
+      this.todos.forEach(todo => {
+        if (todo.id === id) {
+          todo.updated_at = this.$dayjs().format("YYYY/MM/DD");
+          todo.updated_by = user;
+        }
+      });
       return;
+    }
+  },
+  computed: {
+    filteredTodos: function() {
+      if (this.$route.params.sense === "all") return this.todos;
+      return this.todos.filter(t => t.sense === this.$route.params.sense);
     }
   }
 };
