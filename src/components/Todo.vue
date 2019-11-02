@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>{{ todo.id }}</td>
-    <td @click="isContentEditable = true">
+    <td class="todo-content" @click="isContentEditable = true">
       <span v-if="isContentEditable">
         <input
           type="text"
@@ -89,5 +89,8 @@ export default {
 <style>
 .i-heart:hover {
   color: #faaaaa;
+}
+.todo-content {
+  min-width: 200px;
 }
 </style>
