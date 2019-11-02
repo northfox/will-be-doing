@@ -16,6 +16,7 @@
                 class="form-control form-control-sm"
                 required="required"
                 v-model="todo.content"
+                v-focus
               />
             </div>
             <button class="btn btn-primary btn-sm" @click="itemSave">
@@ -143,6 +144,13 @@ export default {
     filteredTodos: function() {
       if (this.$route.params.sense === "all") return this.todos;
       return this.todos.filter(t => t.sense === this.$route.params.sense);
+    }
+  },
+  directives: {
+    focus: {
+      update: function(el) {
+        el.focus();
+      }
     }
   }
 };
