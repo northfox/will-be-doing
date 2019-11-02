@@ -4,7 +4,6 @@
       <thead class="thead-light">
         <tr>
           <th>#</th>
-          <th>タグ</th>
           <th>内容</th>
           <th>いいね数</th>
           <th>完了日</th>

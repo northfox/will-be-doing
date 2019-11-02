@@ -1,7 +1,6 @@
 <template>
   <tr>
     <td>{{ todo.id }}</td>
-    <td>{{ todo.sense }}</td>
     <td @click="isContentEditable = true">
       <span v-if="isContentEditable">
         <input
