@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>{{ todo.id }}</td>
-    <td class="todo-content" @click="isContentEditable = true">
+    <td @click="isContentEditable = true">
       <span v-if="isContentEditable">
         <input
           type="text"
@@ -38,7 +38,7 @@
     </td>
     <td>{{ todo.done_at }}</td>
     <td>{{ todo.done_by }}</td>
-    <td>
+    <td class="btn-content">
       <button class="btn btn-sm btn-success" @click="done(todo.id)">
         Done
       </button>
@@ -89,8 +89,5 @@ export default {
 <style>
 .i-heart:hover {
   color: #faaaaa;
-}
-.todo-content {
-  min-width: 200px;
 }
 </style>

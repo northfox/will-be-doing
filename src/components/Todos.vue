@@ -4,7 +4,7 @@
       <thead class="thead-light">
         <tr>
           <th>#</th>
-          <th>内容</th>
+          <th class="todo-content">内容</th>
           <th>いいね数</th>
           <th>完了日</th>
           <th>完了者</th>
@@ -49,3 +49,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.todo-content {
+  min-width: 200px;
+}
+.btn-content {
+  max-width: 100px;
+}
+</style>
