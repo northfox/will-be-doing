@@ -37,7 +37,6 @@
       {{ todo.star }}
     </td>
     <td>{{ todo.done_at }}</td>
-    <td>{{ todo.done_by }}</td>
     <td class="btn-content">
       <button class="btn btn-sm btn-success" @click="done(todo.id)">
         Done

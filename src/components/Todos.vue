@@ -7,7 +7,6 @@
           <th class="todo-content">内容</th>
           <th>いいね数</th>
           <th>完了日</th>
-          <th>完了者</th>
           <th></th>
         </tr>
       </thead>
