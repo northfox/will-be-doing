@@ -45,23 +45,17 @@
         </tr>
       </thead>
       <tbody>
-        <Todo
-          :todo="todo"
-          v-for="todo in todos"
-          :key="todo.id"
-          @update="todoUpdate"
-          @itemRemove="todoRemove"
-        ></Todo>
+        <Todo :todo="todo" v-for="todo in todos" :key="todo.id" @update="todoUpdate" @itemRemove="todoRemove"></Todo>
       </tbody>
     </table>
   </div>
 </template>
 
 <script>
-import Todo from "@/components/Todo.vue";
+import Todo from '@/components/Todo.vue'
 
 export default {
-  name: "Todos",
+  name: 'Todos',
   components: {
     Todo
   },
@@ -73,19 +67,19 @@ export default {
   methods: {
     todoUpdate: function(id) {
       // TODO Who is updatedBy
-      this.$emit("oneUpdate", id, "whoami");
+      this.$emit('oneUpdate', id, 'whoami')
     },
     todoRemove: function(id) {
-      if (confirm("本当に削除する？")) {
+      if (confirm('本当に削除する？')) {
         // TODO Who is updatedBy
-        this.$emit("oneRemove", id, "whoami");
+        this.$emit('oneRemove', id, 'whoami')
       }
     },
     setSortingObject: function(object) {
-      this.$emit("setSortingObject", object);
+      this.$emit('setSortingObject', object)
     }
   }
-};
+}
 </script>
 
 <style>
@@ -96,9 +90,9 @@ export default {
   max-width: 100px;
 }
 .sortingDesc:after {
-  content: "▼";
+  content: '▼';
 }
 .sortingAsc:after {
-  content: "▲";
+  content: '▲';
 }
 </style>

@@ -12,9 +12,7 @@
           v-focus
         />
       </span>
-      <span v-else>
-        {{ todo.content }}
-      </span>
+      <span v-else>{{ todo.content }}</span>
     </td>
     <td>
       <svg
@@ -50,63 +48,56 @@
         stroke-width="1"
         @click="prioritize(todo.id)"
       >
-        <path
-          d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z"
-        />
+        <path d="M16 2 L20 12 30 12 22 19 25 30 16 23 7 30 10 19 2 12 12 12 Z" />
       </svg>
       {{ todo.priority }}
     </td>
     <td>{{ todo.done_at }}</td>
     <td class="btn-content">
-      <button class="btn btn-sm btn-success" @click="done(todo.id)">
-        Done
-      </button>
-      |
-      <button class="btn btn-sm btn-danger" @click="remove(todo.id)">
-        Delete
-      </button>
+      <button class="btn btn-sm btn-success" @click="done(todo.id)">Done</button> |
+      <button class="btn btn-sm btn-danger" @click="remove(todo.id)">Delete</button>
     </td>
   </tr>
 </template>
 
 <script>
 export default {
-  name: "Todo",
+  name: 'Todo',
   props: {
     todo: Object
   },
   data: function() {
     return {
       isContentEditable: false
-    };
+    }
   },
   methods: {
     iine: function(id) {
-      this.todo.iine++;
-      this.$emit("update", id);
+      this.todo.iine++
+      this.$emit('update', id)
     },
     prioritize: function(id) {
-      this.todo.priority++;
-      this.$emit("update", id);
+      this.todo.priority++
+      this.$emit('update', id)
     },
     done: function(id) {
-      let doneBy = prompt("誰がやった？") || "anonymous";
-      this.todo.done_at = this.$dayjs().format("YYYY/MM/DD");
-      this.todo.done_by = doneBy;
-      this.$emit("update", id);
+      let doneBy = prompt('誰がやった？') || 'anonymous'
+      this.todo.done_at = this.$dayjs().format('YYYY/MM/DD')
+      this.todo.done_by = doneBy
+      this.$emit('update', id)
     },
     remove: function(id) {
-      this.$emit("itemRemove", id);
+      this.$emit('itemRemove', id)
     }
   },
   directives: {
     focus: {
       inserted: function(el) {
-        el.focus();
+        el.focus()
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

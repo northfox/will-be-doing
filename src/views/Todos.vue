@@ -46,90 +46,90 @@
 
 <script>
 // @ is an alias to /src
-import Todos from "@/components/Todos.vue";
+import Todos from '@/components/Todos.vue'
 
-const STORAGE_KEY = "will-be-doing";
+const STORAGE_KEY = 'will-be-doing'
 let todosRepository = {
   fetch: function() {
-    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || []);
+    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || [])
     todos.forEach((todo, index) => {
-      todo.id = index;
-    });
-    todosRepository.uid = todos.length;
-    return todos;
+      todo.id = index
+    })
+    todosRepository.uid = todos.length
+    return todos
   },
   save: function(todos) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
   },
   remove: function(index) {
-    let todos = this.fetch();
-    todos.splice(index, 1);
-    this.save(todos);
+    let todos = this.fetch()
+    todos.splice(index, 1)
+    this.save(todos)
   }
-};
+}
 
 export default {
-  name: "all",
+  name: 'all',
   components: {
     Todos: Todos
   },
   data: function() {
     return {
-      filterSense: "WillBeDoing",
-      sortingObject: "id",
+      filterSense: 'WillBeDoing',
+      sortingObject: 'id',
       isSortingDesc: true,
       todos: [
         {
           id: 0,
           taste: this.$route.params.sense,
-          content: "ダミー内容",
+          content: 'ダミー内容',
           iine: 0,
           priority: 0,
-          sense: "todo",
-          created_at: "2019/10/01",
-          created_by: "K",
-          updated_at: "2019/10/25",
-          updated_by: "A",
+          sense: 'todo',
+          created_at: '2019/10/01',
+          created_by: 'K',
+          updated_at: '2019/10/25',
+          updated_by: 'A',
           deleted_at: null,
           deleted_by: null,
-          done_at: "2019/11/01",
-          done_by: ["A", "K"]
+          done_at: '2019/11/01',
+          done_by: ['A', 'K']
         }
       ],
       todo: {
         id: 0,
         taste: this.$route.params.sense,
-        content: "",
+        content: '',
         iine: 0,
         priority: 0,
-        sense: "",
-        created_at: "",
-        created_by: "",
-        updated_at: "",
-        updated_by: "",
+        sense: '',
+        created_at: '',
+        created_by: '',
+        updated_at: '',
+        updated_by: '',
         deleted_at: null,
         deleted_by: null,
         done_at: null,
         done_by: null
       }
-    };
+    }
   },
   mounted() {
-    this.todos = todosRepository.fetch();
+    this.todos = todosRepository.fetch()
   },
   watch: {
     todos: {
       handler: function(newTodos) {
-        todosRepository.save(newTodos);
+        todosRepository.save(newTodos)
       },
       deep: true
     }
   },
   methods: {
     itemSave: function() {
-      let content = this.todo.content && this.todo.content.trim();
+      let content = this.todo.content && this.todo.content.trim()
       if (!content) {
-        return;
+        return
       }
       let todo = {
         id: todosRepository.uid++,
@@ -137,73 +137,73 @@ export default {
         content: content,
         iine: 0,
         priority: 0,
-        created_at: this.$dayjs().format("YYYY/MM/DD"),
-        created_by: "K",
-        updated_at: this.$dayjs().format("YYYY/MM/DD"),
-        updated_by: "K",
+        created_at: this.$dayjs().format('YYYY/MM/DD'),
+        created_by: 'K',
+        updated_at: this.$dayjs().format('YYYY/MM/DD'),
+        updated_by: 'K',
         deleted_at: null,
         deleted_by: null,
         done_at: null,
         done_by: null
-      };
-      this.todos.push(todo);
-      this.todo = {};
-      return;
+      }
+      this.todos.push(todo)
+      this.todo = {}
+      return
     },
     itemUpdate: function(id, user) {
-      this.todos.forEach(todo => {
+      this.todos.forEach((todo) => {
         if (todo.id === id) {
-          todo.updated_at = this.$dayjs().format("YYYY/MM/DD");
-          todo.updated_by = user;
+          todo.updated_at = this.$dayjs().format('YYYY/MM/DD')
+          todo.updated_by = user
         }
-      });
-      return;
+      })
+      return
     },
     itemRemove: function(id, user) {
-      this.todos.forEach(todo => {
+      this.todos.forEach((todo) => {
         if (todo.id === id) {
-          todo.deleted_at = this.$dayjs().format("YYYY/MM/DD");
-          todo.deleted_by = user;
-          this.itemUpdate(id, user);
+          todo.deleted_at = this.$dayjs().format('YYYY/MM/DD')
+          todo.deleted_by = user
+          this.itemUpdate(id, user)
         }
-      });
-      return;
+      })
+      return
     },
     setSortingObject: function(object) {
       if (this.sortingObject === object) {
-        this.isSortingDesc = !this.isSortingDesc;
+        this.isSortingDesc = !this.isSortingDesc
       }
-      this.sortingObject = object;
+      this.sortingObject = object
     }
   },
   computed: {
     filteredSortedTodos: function() {
-      let todos = this.todos.filter(t => t.deleted_at === null);
-      todos.sort(a => (a.done_at !== null ? 1 : -1));
+      let todos = this.todos.filter((t) => t.deleted_at === null)
+      todos.sort((a) => (a.done_at !== null ? 1 : -1))
 
       todos = todos
-        .filter(t => t.done_at === null)
+        .filter((t) => t.done_at === null)
         .sort((a, b) => {
           if (this.isSortingDesc) {
-            return a[this.sortingObject] < b[this.sortingObject] ? 1 : -1;
+            return a[this.sortingObject] < b[this.sortingObject] ? 1 : -1
           } else {
-            return a[this.sortingObject] > b[this.sortingObject] ? 1 : -1;
+            return a[this.sortingObject] > b[this.sortingObject] ? 1 : -1
           }
         })
-        .concat(todos.filter(t => t.done_at !== null));
+        .concat(todos.filter((t) => t.done_at !== null))
 
-      if (this.$route.params.sense === "all") {
-        return todos;
+      if (this.$route.params.sense === 'all') {
+        return todos
       }
-      return todos.filter(t => t.sense === this.$route.params.sense);
+      return todos.filter((t) => t.sense === this.$route.params.sense)
     }
   },
   directives: {
     focus: {
       update: function(el) {
-        el.focus();
+        el.focus()
       }
     }
   }
-};
+}
 </script>
