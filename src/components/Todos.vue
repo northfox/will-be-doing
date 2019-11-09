@@ -3,10 +3,31 @@
     <table class="table table-sm table-bordered">
       <thead class="thead-light">
         <tr>
-          <th>#</th>
-          <th class="todo-content">内容</th>
-          <th>いいね</th>
-          <th>優先度</th>
+          <th
+            :class="{ sorting: sortingObject === 'id' }"
+            @click="setSortingObject('id')"
+          >
+            #
+          </th>
+          <th
+            :class="{ sorting: sortingObject === 'content' }"
+            class="todo-content"
+            @click="setSortingObject('content')"
+          >
+            内容
+          </th>
+          <th
+            :class="{ sorting: sortingObject === 'iine' }"
+            @click="setSortingObject('iine')"
+          >
+            いいね
+          </th>
+          <th
+            :class="{ sorting: sortingObject === 'priority' }"
+            @click="setSortingObject('priority')"
+          >
+            優先度
+          </th>
           <th>完了日</th>
           <th></th>
         </tr>
@@ -33,7 +54,8 @@ export default {
     Todo
   },
   props: {
-    todos: Array
+    todos: Array,
+    sortingObject: String
   },
   methods: {
     todoUpdate: function(id) {
@@ -45,6 +67,9 @@ export default {
         // TODO Who is updatedBy
         this.$emit("oneRemove", id, "whoami");
       }
+    },
+    setSortingObject: function(object) {
+      this.$emit("setSortingObject", object);
     }
   }
 };
@@ -56,5 +81,8 @@ export default {
 }
 .btn-content {
   max-width: 100px;
+}
+.sorting:after {
+  content: "▼";
 }
 </style>

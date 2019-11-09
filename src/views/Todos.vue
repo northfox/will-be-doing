@@ -32,8 +32,10 @@
           <h2>一覧</h2>
           <Todos
             :todos="filteredSortedTodos"
+            :sortingObject="sortingObject"
             @oneUpdate="itemUpdate"
             @oneRemove="itemRemove"
+            @setSortingObject="setSortingObject"
           ></Todos>
         </section>
       </div>
@@ -73,6 +75,7 @@ export default {
   data: function() {
     return {
       filterSense: "WillBeDoing",
+      sortingObject: "id",
       todos: [
         {
           id: 0,
@@ -163,12 +166,22 @@ export default {
         }
       });
       return;
+    },
+    setSortingObject: function(object) {
+      this.sortingObject = object;
     }
   },
   computed: {
     filteredSortedTodos: function() {
       let todos = this.todos.filter(t => t.deleted_at === null);
       todos.sort(a => (a.done_at !== null ? 1 : -1));
+
+      todos = todos
+        .filter(t => t.done_at === null)
+        .sort((a, b) =>
+          a[this.sortingObject] < b[this.sortingObject] ? 1 : -1
+        )
+        .concat(todos.filter(t => t.done_at !== null));
 
       if (this.$route.params.sense === "all") {
         return todos;
