@@ -50,5 +50,6 @@
 <style>
 #app {
   text-align: center;
+  background-color: #fcfcfc;
 }
 </style>

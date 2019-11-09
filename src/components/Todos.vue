@@ -5,7 +5,8 @@
         <tr>
           <th>#</th>
           <th class="todo-content">内容</th>
-          <th>いいね数</th>
+          <th>いいね</th>
+          <th>優先度</th>
           <th>完了日</th>
           <th></th>
         </tr>
