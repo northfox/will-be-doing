@@ -33,6 +33,7 @@
           <Todos
             :todos="filteredSortedTodos"
             :sortingObject="sortingObject"
+            :isSortingDesc="isSortingDesc"
             @oneUpdate="itemUpdate"
             @oneRemove="itemRemove"
             @setSortingObject="setSortingObject"
@@ -76,6 +77,7 @@ export default {
     return {
       filterSense: "WillBeDoing",
       sortingObject: "id",
+      isSortingDesc: true,
       todos: [
         {
           id: 0,
@@ -168,6 +170,9 @@ export default {
       return;
     },
     setSortingObject: function(object) {
+      if (this.sortingObject === object) {
+        this.isSortingDesc = !this.isSortingDesc;
+      }
       this.sortingObject = object;
     }
   },
@@ -178,9 +183,13 @@ export default {
 
       todos = todos
         .filter(t => t.done_at === null)
-        .sort((a, b) =>
-          a[this.sortingObject] < b[this.sortingObject] ? 1 : -1
-        )
+        .sort((a, b) => {
+          if (this.isSortingDesc) {
+            return a[this.sortingObject] < b[this.sortingObject] ? 1 : -1;
+          } else {
+            return a[this.sortingObject] > b[this.sortingObject] ? 1 : -1;
+          }
+        })
         .concat(todos.filter(t => t.done_at !== null));
 
       if (this.$route.params.sense === "all") {

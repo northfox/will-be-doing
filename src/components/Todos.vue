@@ -4,26 +4,38 @@
       <thead class="thead-light">
         <tr>
           <th
-            :class="{ sorting: sortingObject === 'id' }"
+            :class="{
+              sortingAsc: sortingObject === 'id' && !isSortingDesc,
+              sortingDesc: sortingObject === 'id' && isSortingDesc
+            }"
             @click="setSortingObject('id')"
           >
             #
           </th>
           <th
-            :class="{ sorting: sortingObject === 'content' }"
+            :class="{
+              sortingAsc: sortingObject === 'content' && !isSortingDesc,
+              sortingDesc: sortingObject === 'content' && isSortingDesc
+            }"
             class="todo-content"
             @click="setSortingObject('content')"
           >
             内容
           </th>
           <th
-            :class="{ sorting: sortingObject === 'iine' }"
+            :class="{
+              sortingAsc: sortingObject === 'iine' && !isSortingDesc,
+              sortingDesc: sortingObject === 'iine' && isSortingDesc
+            }"
             @click="setSortingObject('iine')"
           >
             いいね
           </th>
           <th
-            :class="{ sorting: sortingObject === 'priority' }"
+            :class="{
+              sortingAsc: sortingObject === 'priority' && !isSortingDesc,
+              sortingDesc: sortingObject === 'priority' && isSortingDesc
+            }"
             @click="setSortingObject('priority')"
           >
             優先度
@@ -55,7 +67,8 @@ export default {
   },
   props: {
     todos: Array,
-    sortingObject: String
+    sortingObject: String,
+    isSortingDesc: Boolean
   },
   methods: {
     todoUpdate: function(id) {
@@ -82,7 +95,10 @@ export default {
 .btn-content {
   max-width: 100px;
 }
-.sorting:after {
+.sortingDesc:after {
   content: "▼";
+}
+.sortingAsc:after {
+  content: "▲";
 }
 </style>
