@@ -3,11 +3,44 @@
     <table class="table table-sm table-bordered">
       <thead class="thead-light">
         <tr>
-          <th>#</th>
-          <th>内容</th>
-          <th>いいね数</th>
+          <th
+            :class="{
+              sortingAsc: sortingObject === 'id' && !isSortingDesc,
+              sortingDesc: sortingObject === 'id' && isSortingDesc
+            }"
+            @click="setSortingObject('id')"
+          >
+            #
+          </th>
+          <th
+            :class="{
+              sortingAsc: sortingObject === 'content' && !isSortingDesc,
+              sortingDesc: sortingObject === 'content' && isSortingDesc
+            }"
+            class="todo-content"
+            @click="setSortingObject('content')"
+          >
+            内容
+          </th>
+          <th
+            :class="{
+              sortingAsc: sortingObject === 'iine' && !isSortingDesc,
+              sortingDesc: sortingObject === 'iine' && isSortingDesc
+            }"
+            @click="setSortingObject('iine')"
+          >
+            いいね
+          </th>
+          <th
+            :class="{
+              sortingAsc: sortingObject === 'priority' && !isSortingDesc,
+              sortingDesc: sortingObject === 'priority' && isSortingDesc
+            }"
+            @click="setSortingObject('priority')"
+          >
+            優先度
+          </th>
           <th>完了日</th>
-          <th>完了者</th>
           <th></th>
         </tr>
       </thead>
@@ -33,7 +66,9 @@ export default {
     Todo
   },
   props: {
-    todos: Array
+    todos: Array,
+    sortingObject: String,
+    isSortingDesc: Boolean
   },
   methods: {
     todoUpdate: function(id) {
@@ -45,7 +80,25 @@ export default {
         // TODO Who is updatedBy
         this.$emit("oneRemove", id, "whoami");
       }
+    },
+    setSortingObject: function(object) {
+      this.$emit("setSortingObject", object);
     }
   }
 };
 </script>
+
+<style>
+.todo-content {
+  min-width: 200px;
+}
+.btn-content {
+  max-width: 100px;
+}
+.sortingDesc:after {
+  content: "▼";
+}
+.sortingAsc:after {
+  content: "▲";
+}
+</style>

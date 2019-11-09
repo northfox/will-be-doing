@@ -31,9 +31,12 @@
         <section>
           <h2>一覧</h2>
           <Todos
-            :todos="filteredTodos"
+            :todos="filteredSortedTodos"
+            :sortingObject="sortingObject"
+            :isSortingDesc="isSortingDesc"
             @oneUpdate="itemUpdate"
             @oneRemove="itemRemove"
+            @setSortingObject="setSortingObject"
           ></Todos>
         </section>
       </div>
@@ -73,12 +76,15 @@ export default {
   data: function() {
     return {
       filterSense: "WillBeDoing",
+      sortingObject: "id",
+      isSortingDesc: true,
       todos: [
         {
           id: 0,
           taste: this.$route.params.sense,
           content: "ダミー内容",
-          star: 0,
+          iine: 0,
+          priority: 0,
           sense: "todo",
           created_at: "2019/10/01",
           created_by: "K",
@@ -94,7 +100,8 @@ export default {
         id: 0,
         taste: this.$route.params.sense,
         content: "",
-        star: 0,
+        iine: 0,
+        priority: 0,
         sense: "",
         created_at: "",
         created_by: "",
@@ -121,12 +128,15 @@ export default {
   methods: {
     itemSave: function() {
       let content = this.todo.content && this.todo.content.trim();
-      if (!content) return;
+      if (!content) {
+        return;
+      }
       let todo = {
         id: todosRepository.uid++,
         sense: this.$route.params.sense,
         content: content,
-        star: 0,
+        iine: 0,
+        priority: 0,
         created_at: this.$dayjs().format("YYYY/MM/DD"),
         created_by: "K",
         updated_at: this.$dayjs().format("YYYY/MM/DD"),
@@ -158,12 +168,33 @@ export default {
         }
       });
       return;
+    },
+    setSortingObject: function(object) {
+      if (this.sortingObject === object) {
+        this.isSortingDesc = !this.isSortingDesc;
+      }
+      this.sortingObject = object;
     }
   },
   computed: {
-    filteredTodos: function() {
+    filteredSortedTodos: function() {
       let todos = this.todos.filter(t => t.deleted_at === null);
-      if (this.$route.params.sense === "all") return todos;
+      todos.sort(a => (a.done_at !== null ? 1 : -1));
+
+      todos = todos
+        .filter(t => t.done_at === null)
+        .sort((a, b) => {
+          if (this.isSortingDesc) {
+            return a[this.sortingObject] < b[this.sortingObject] ? 1 : -1;
+          } else {
+            return a[this.sortingObject] > b[this.sortingObject] ? 1 : -1;
+          }
+        })
+        .concat(todos.filter(t => t.done_at !== null));
+
+      if (this.$route.params.sense === "all") {
+        return todos;
+      }
       return todos.filter(t => t.sense === this.$route.params.sense);
     }
   },
