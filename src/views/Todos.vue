@@ -31,7 +31,7 @@
         <section>
           <h2>一覧</h2>
           <Todos
-            :todos="filteredTodos"
+            :todos="filteredSortedTodos"
             @oneUpdate="itemUpdate"
             @oneRemove="itemRemove"
           ></Todos>
@@ -121,7 +121,9 @@ export default {
   methods: {
     itemSave: function() {
       let content = this.todo.content && this.todo.content.trim();
-      if (!content) return;
+      if (!content) {
+        return;
+      }
       let todo = {
         id: todosRepository.uid++,
         sense: this.$route.params.sense,
@@ -161,9 +163,13 @@ export default {
     }
   },
   computed: {
-    filteredTodos: function() {
+    filteredSortedTodos: function() {
       let todos = this.todos.filter(t => t.deleted_at === null);
-      if (this.$route.params.sense === "all") return todos;
+      todos.sort(a => (a.done_at !== null ? 1 : -1));
+
+      if (this.$route.params.sense === "all") {
+        return todos;
+      }
       return todos.filter(t => t.sense === this.$route.params.sense);
     }
   },

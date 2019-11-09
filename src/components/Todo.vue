@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr :class="{ done: todo.done_at !== null }">
     <td>{{ todo.id }}</td>
     <td @click="isContentEditable = true">
       <span v-if="isContentEditable">
@@ -86,8 +86,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .i-heart:hover {
   color: #faaaaa;
+}
+.done {
+  color: lightgray;
+  text-decoration: line-through;
 }
 </style>
