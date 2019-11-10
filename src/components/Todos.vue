@@ -40,7 +40,6 @@
           >
             優先度
           </th>
-          <th>完了日</th>
           <th></th>
         </tr>
       </thead>
@@ -84,7 +83,7 @@ export default {
 
 <style>
 .todo-content {
-  min-width: 200px;
+  min-width: 150px;
 }
 .btn-content {
   max-width: 100px;

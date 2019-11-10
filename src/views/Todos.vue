@@ -1,35 +1,37 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col">
-        <h1>{{ filterSense }}</h1>
-      </div>
-    </div>
-    <div class="row">
+    <div class="row mb-4">
       <div class="col">
         <section>
-          <form>
-            <div class="form-group">
-              内容
-              <input
-                type="text"
-                class="form-control form-control-sm"
-                required="required"
-                v-model="todo.content"
-                v-focus
-              />
+          <form class="input-group">
+            <div class="input-group-prepend">
+              <select id="filteringSense" class="custom-select" v-model="filterSense">
+                <option value="all">全部</option>
+                <option value="touch">触りたい</option>
+                <option value="taste">食べたい</option>
+                <option value="hearing">聴きたい</option>
+                <option value="eyesight">見たい</option>
+                <option value="smell">嗅ぎたい</option>
+              </select>
             </div>
-            <button class="btn btn-primary btn-sm" @click="itemSave">
-              新規追加
-            </button>
+            <input
+              id="content"
+              type="text"
+              class="form-control form-control"
+              required="required"
+              v-model="todo.content"
+              v-focus
+            />
+            <div class="input-group-append">
+              <button class="btn btn-primary" @click="itemSave">追加</button>
+            </div>
           </form>
         </section>
       </div>
     </div>
-    <div class="row pt-3">
+    <div class="row">
       <div class="col">
         <section>
-          <h2>一覧</h2>
           <Todos
             :todos="filteredSortedTodos"
             :sortingObject="sortingObject"
@@ -68,6 +70,15 @@ let todosRepository = {
   }
 }
 
+const filterSenses = [
+  { label: '全部', value: 'all' },
+  { label: '触りたいもの', value: 'touch' },
+  { label: '食べたいもの', value: 'taste' },
+  { label: '聴きたいもの', value: 'hearing' },
+  { label: '見たいもの', value: 'eyesight' },
+  { label: '嗅ぎたいもの', value: 'smell' }
+]
+
 export default {
   name: 'all',
   components: {
@@ -75,7 +86,7 @@ export default {
   },
   data: function() {
     return {
-      filterSense: 'WillBeDoing',
+      filterSense: 'all',
       sortingObject: 'id',
       isSortingDesc: true,
       todos: [
@@ -133,7 +144,7 @@ export default {
       }
       let todo = {
         id: todosRepository.uid++,
-        sense: this.$route.params.sense,
+        sense: this.filterSense,
         content: content,
         iine: 0,
         priority: 0,
@@ -192,10 +203,10 @@ export default {
         })
         .concat(todos.filter((t) => t.done_at !== null))
 
-      if (this.$route.params.sense === 'all') {
+      if (this.filterSense === 'all') {
         return todos
       }
-      return todos.filter((t) => t.sense === this.$route.params.sense)
+      return todos.filter((t) => t.sense === filterSenses.find((s) => s.value === this.filterSense).value)
     }
   },
   directives: {
