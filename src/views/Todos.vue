@@ -1,28 +1,18 @@
 <template>
   <div class="container">
-    <div class="row mb-5">
-      <div class="col">
-        <div class="input-group input-group-sm">
-          <div class="input-group-prepend">
-            <label class="input-group-text" for="filteringSense">フィルタ</label>
-          </div>
-          <select id="filteringSense" class="custom-select" v-model="filterSense">
-            <option value="all">全部</option>
-            <option value="touch">触りたいもの</option>
-            <option value="taste">食べたいもの</option>
-            <option value="hearing">聴きたいもの</option>
-            <option value="eyesight">見たいもの</option>
-            <option value="smell">嗅ぎたいもの</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="row">
+    <div class="row mb-4">
       <div class="col">
         <section>
-          <form class="input-group input-group">
+          <form class="input-group">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="content">内容</label>
+              <select id="filteringSense" class="custom-select" v-model="filterSense">
+                <option value="all">全部</option>
+                <option value="touch">触りたいもの</option>
+                <option value="taste">食べたいもの</option>
+                <option value="hearing">聴きたいもの</option>
+                <option value="eyesight">見たいもの</option>
+                <option value="smell">嗅ぎたいもの</option>
+              </select>
             </div>
             <input
               id="content"
