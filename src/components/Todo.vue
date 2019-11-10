@@ -52,7 +52,6 @@
       </svg>
       {{ todo.priority }}
     </td>
-    <td>{{ todo.done_at }}</td>
     <td class="btn-content">
       <button class="btn btn-sm btn-success" @click="done(todo.id)">Done</button> |
       <button class="btn btn-sm btn-danger" @click="remove(todo.id)">Delete</button>
