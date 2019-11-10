@@ -7,11 +7,11 @@
             <div class="input-group-prepend">
               <select id="filteringSense" class="custom-select" v-model="filterSense">
                 <option value="all">全部</option>
-                <option value="touch">触りたいもの</option>
-                <option value="taste">食べたいもの</option>
-                <option value="hearing">聴きたいもの</option>
-                <option value="eyesight">見たいもの</option>
-                <option value="smell">嗅ぎたいもの</option>
+                <option value="touch">触りたい</option>
+                <option value="taste">食べたい</option>
+                <option value="hearing">聴きたい</option>
+                <option value="eyesight">見たい</option>
+                <option value="smell">嗅ぎたい</option>
               </select>
             </div>
             <input
@@ -23,7 +23,7 @@
               v-focus
             />
             <div class="input-group-append">
-              <button class="btn btn-primary" @click="itemSave">新規追加</button>
+              <button class="btn btn-primary" @click="itemSave">追加</button>
             </div>
           </form>
         </section>

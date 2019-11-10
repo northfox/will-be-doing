@@ -53,8 +53,8 @@
       {{ todo.priority }}
     </td>
     <td class="btn-content">
-      <button class="btn btn-sm btn-success" @click="done(todo.id)">Done</button> |
-      <button class="btn btn-sm btn-danger" @click="remove(todo.id)">Delete</button>
+      <button class="btn btn-sm btn-success" @click="done(todo.id)">Done</button>
+      <button class="btn btn-sm btn-danger ml-1" @click="remove(todo.id)">Delete</button>
     </td>
   </tr>
 </template>

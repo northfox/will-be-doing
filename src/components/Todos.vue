@@ -83,7 +83,7 @@ export default {
 
 <style>
 .todo-content {
-  min-width: 200px;
+  min-width: 150px;
 }
 .btn-content {
   max-width: 100px;
