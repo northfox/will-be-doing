@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mb-4">
+    <div class="row mb-2">
       <div class="col">
         <section>
           <form class="input-group">
