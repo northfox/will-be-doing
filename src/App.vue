@@ -5,7 +5,7 @@
         <router-link class="navbar-brand" to="/">Will-Be-Doing</router-link>
       </div>
     </nav>
-    <router-view class="pt-2 pr-0 pl-0" />
+    <router-view class="pt-2" />
   </div>
 </template>
 
