@@ -84,8 +84,8 @@ export default {
 <style>
 .todo-content {
   min-width: 150px;
-  width: 700px;
-  word-wrap: break-word;
+  max-width: 550px;
+  word-break: break-word;
 }
 .btn-content {
   max-width: 100px;

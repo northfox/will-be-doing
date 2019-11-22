@@ -1,7 +1,7 @@
 <template>
   <tr :class="{ done: todo.done_at !== null }">
     <td>{{ todo.id }}</td>
-    <td @click="isContentEditable = true">
+    <td class="todo-content" @click="isContentEditable = true">
       <span v-if="isContentEditable">
         <input
           type="text"
