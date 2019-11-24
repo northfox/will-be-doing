@@ -53,7 +53,7 @@ import Todos from '@/components/Todos.vue'
 const STORAGE_KEY = 'will-be-doing'
 let todosRepository = {
   fetch: function() {
-    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || [])
+    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
     todos.forEach((todo, index) => {
       todo.id = index
     })
@@ -89,24 +89,7 @@ export default {
       filterSense: 'all',
       sortingObject: 'id',
       isSortingDesc: true,
-      todos: [
-        {
-          id: 0,
-          taste: this.$route.params.sense,
-          content: 'ダミー内容',
-          iine: 0,
-          priority: 0,
-          sense: 'todo',
-          created_at: '2019/10/01',
-          created_by: 'K',
-          updated_at: '2019/10/25',
-          updated_by: 'A',
-          deleted_at: null,
-          deleted_by: null,
-          done_at: '2019/11/01',
-          done_by: ['A', 'K']
-        }
-      ],
+      todos: [],
       todo: {
         id: 0,
         taste: this.$route.params.sense,
