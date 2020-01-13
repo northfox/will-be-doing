@@ -194,7 +194,7 @@ export default {
           this.todos = result.data
         })
         .catch((err) => {
-          alert(`バックアップに失敗しました。 [error: ${err}]`)
+          alert(`バックアップの読み込みに失敗しました。 [error: ${err}]`)
         })
     }
   },
