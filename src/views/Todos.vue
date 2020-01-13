@@ -43,6 +43,12 @@
         </section>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-sm btn-secondary" @click="saveBackup">バックアップに保存</button>
+        <button class="btn btn-sm btn-outline-secondary m-2" @click="loadBackup">バックアップの読み込み</button>
+      </div>
+    </div>
   </div>
 </template>
 
