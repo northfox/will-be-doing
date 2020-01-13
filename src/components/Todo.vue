@@ -81,7 +81,7 @@ export default {
     },
     done: function(id) {
       let doneBy = prompt('誰がやった？') || 'anonymous'
-      this.todo.done_at = this.$dayjs().format('YYYY/MM/DD')
+      this.todo.done_at = this.$dayjs().format(this.$constsnts.dateFormat)
       this.todo.done_by = doneBy
       this.$emit('update', id)
     },

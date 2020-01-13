@@ -137,9 +137,9 @@ export default {
         content: content,
         iine: 0,
         priority: 0,
-        created_at: this.$dayjs().format('YYYY/MM/DD'),
+        created_at: this.$dayjs().format(this.$constsnts.dateFormat),
         created_by: 'K',
-        updated_at: this.$dayjs().format('YYYY/MM/DD'),
+        updated_at: this.$dayjs().format(this.$constsnts.dateFormat),
         updated_by: 'K',
         deleted_at: null,
         deleted_by: null,
@@ -153,7 +153,7 @@ export default {
     itemUpdate: function(id, user) {
       this.todos.forEach((todo) => {
         if (todo.id === id) {
-          todo.updated_at = this.$dayjs().format('YYYY/MM/DD')
+          todo.updated_at = this.$dayjs().format(this.$constsnts.dateFormat)
           todo.updated_by = user
         }
       })
@@ -162,7 +162,7 @@ export default {
     itemRemove: function(id, user) {
       this.todos.forEach((todo) => {
         if (todo.id === id) {
-          todo.deleted_at = this.$dayjs().format('YYYY/MM/DD')
+          todo.deleted_at = this.$dayjs().format(this.$constsnts.dateFormat)
           todo.deleted_by = user
           this.itemUpdate(id, user)
         }
@@ -182,9 +182,12 @@ export default {
         .post(`/app/v1/backups/${keyword}`, this.todos)
         .then((result) => {
           console.log(JSON.stringify(result.data))
-          alert(`バックアップが成功しました。 [keyword: ${keyword}`)
+          alert(`バックアップが成功しました。 [keyword: ${keyword}]`)
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          console.error(err)
+          alert(`バックアップに失敗しました。 [error: ${err}]`)
+        })
     },
     loadBackup: function() {
       let keyword = prompt('バックアップ時のキーワードを指定してください。')
@@ -193,7 +196,10 @@ export default {
         .then((result) => {
           this.todos = result.data
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          console.error(err)
+          alert(`バックアップに失敗しました。 [error: ${err}]`)
+        })
     }
   },
   computed: {
