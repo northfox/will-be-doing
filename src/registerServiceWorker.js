@@ -19,6 +19,7 @@ if (process.env.NODE_ENV === 'production') {
       console.log('New content is downloading.')
     },
     updated() {
+      alert('アプリの更新を取り込みました。')
       console.log('New content is available; please refresh.')
     },
     offline() {
