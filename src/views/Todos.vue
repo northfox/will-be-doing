@@ -177,27 +177,23 @@ export default {
     },
     saveBackup: function() {
       let keyword = prompt('読み込み時に使うキーワードを登録してください。')
-      console.log(JSON.stringify(this.todos))
       this.$axios
-        .post(`/app/v1/backups/${keyword}`, this.todos)
-        .then((result) => {
-          console.log(JSON.stringify(result.data))
+        .post(`/app/will_be_doing/api/v1/backups/${keyword}`, this.todos)
+        .then(() => {
           alert(`バックアップが成功しました。 [keyword: ${keyword}]`)
         })
         .catch((err) => {
-          console.error(err)
           alert(`バックアップに失敗しました。 [error: ${err}]`)
         })
     },
     loadBackup: function() {
       let keyword = prompt('バックアップ時のキーワードを指定してください。')
       this.$axios
-        .get(`/app/v1/backups/${keyword}`)
+        .get(`/app/will_be_doing/api/v1/backups/${keyword}`)
         .then((result) => {
           this.todos = result.data
         })
         .catch((err) => {
-          console.error(err)
           alert(`バックアップに失敗しました。 [error: ${err}]`)
         })
     }
