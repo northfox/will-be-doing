@@ -1,5 +1,5 @@
 module.exports = {
   app: {
-    uri: 'https://ours-api.herokuapp.com'
+    uri: process.env.APP_URI
   }
 }

@@ -177,6 +177,7 @@ export default {
     },
     saveBackup: function() {
       let keyword = prompt('読み込み時に使うキーワードを登録してください。')
+      if (!keyword) return
       this.$axios
         .post(`/app/will_be_doing/api/v1/backups/${keyword}`, this.todos)
         .then(() => {
@@ -188,6 +189,7 @@ export default {
     },
     loadBackup: function() {
       let keyword = prompt('バックアップ時のキーワードを指定してください。')
+      if (!keyword) return
       this.$axios
         .get(`/app/will_be_doing/api/v1/backups/${keyword}`)
         .then((result) => {
