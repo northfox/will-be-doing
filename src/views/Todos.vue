@@ -174,13 +174,32 @@ export default {
         this.isSortingDesc = !this.isSortingDesc
       }
       this.sortingObject = object
+    },
+    saveBackup: function() {
+      let keyword = prompt('読み込み時に使うキーワードを登録してください。')
+      console.log(JSON.stringify(this.todos))
+      this.$axios
+        .post(`/app/v1/backups/${keyword}`, this.todos)
+        .then((result) => {
+          console.log(JSON.stringify(result.data))
+          alert(`バックアップが成功しました。 [keyword: ${keyword}`)
+        })
+        .catch((err) => console.error(err))
+    },
+    loadBackup: function() {
+      let keyword = prompt('バックアップ時のキーワードを指定してください。')
+      this.$axios
+        .get(`/app/v1/backups/${keyword}`)
+        .then((result) => {
+          this.todos = result.data
+        })
+        .catch((err) => console.error(err))
     }
   },
   computed: {
     filteredSortedTodos: function() {
       let todos = this.todos.filter((t) => t.deleted_at === null)
       todos.sort((a) => (a.done_at !== null ? 1 : -1))
-
       todos = todos
         .filter((t) => t.done_at === null)
         .sort((a, b) => {
