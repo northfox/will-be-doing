@@ -39,7 +39,7 @@
             @oneUpdate="itemUpdate"
             @oneRemove="itemRemove"
             @setSortingObject="setSortingObject"
-          ></Todos>
+          />
         </section>
       </div>
     </div>
