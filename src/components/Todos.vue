@@ -40,11 +40,11 @@
           >
             優先度
           </th>
-          <th></th>
+          <th />
         </tr>
       </thead>
       <tbody>
-        <Todo :todo="todo" v-for="todo in todos" :key="todo.id" @update="todoUpdate" @itemRemove="todoRemove"></Todo>
+        <Todo :todo="todo" v-for="todo in todos" :key="todo.id" @update="todoUpdate" @itemRemove="todoRemove" />
       </tbody>
     </table>
   </div>

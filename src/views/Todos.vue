@@ -39,14 +39,16 @@
             @oneUpdate="itemUpdate"
             @oneRemove="itemRemove"
             @setSortingObject="setSortingObject"
-          ></Todos>
+          />
         </section>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-sm btn-secondary" @click="saveBackup">バックアップに保存</button>
-        <button class="btn btn-sm btn-outline-secondary m-2" @click="loadBackup">バックアップの読み込み</button>
+        <button class="btn btn-sm btn-secondary" @click="saveBackup" :disabled="!canBackup">バックアップに保存</button>
+        <button class="btn btn-sm btn-outline-secondary m-2" @click="loadBackup" :disabled="!canBackup">
+          バックアップの読み込み
+        </button>
       </div>
     </div>
   </div>
@@ -111,8 +113,12 @@ export default {
         deleted_by: null,
         done_at: null,
         done_by: null
-      }
+      },
+      canBackup: false
     }
+  },
+  created() {
+    this.$axios.get('/app/actuator/health').then(() => (this.canBackup = true))
   },
   mounted() {
     this.todos = todosRepository.fetch()
