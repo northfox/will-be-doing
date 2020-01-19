@@ -45,8 +45,12 @@
     </div>
     <div class="row">
       <div class="col">
-        <button class="btn btn-sm btn-secondary" @click="saveBackup" :disabled="!canBackup">バックアップに保存</button>
-        <button class="btn btn-sm btn-outline-secondary m-2" @click="loadBackup" :disabled="!canBackup">
+        <div v-if="!canBackup">
+          <span class="lds-dual-ring-text">バックアップ準備中</span>
+          <div class="lds-dual-ring"></div>
+        </div>
+        <button class="btn btn-sm btn-secondary" @click="saveBackup" v-if="canBackup">バックアップに保存</button>
+        <button class="btn btn-sm btn-outline-secondary m-2" @click="loadBackup" v-if="canBackup">
           バックアップの読み込み
         </button>
       </div>
@@ -117,11 +121,12 @@ export default {
       canBackup: false
     }
   },
-  created() {
-    this.$axios.get('/app/actuator/health').then(() => (this.canBackup = true))
+  beforeMount() {
+    this.canBackup = false
   },
   mounted() {
     this.todos = todosRepository.fetch()
+    this.$axios.get('/app/actuator/health').then(() => (this.canBackup = true))
   },
   watch: {
     todos: {
@@ -236,3 +241,33 @@ export default {
   }
 }
 </script>
+
+<style>
+.lds-dual-ring-text {
+  color: #aaa;
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+}
+.lds-dual-ring:after {
+  content: ' ';
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 3px solid #aaa;
+  border-color: #aaa #aaa #aaa transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
