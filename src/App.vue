@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="navbar-nav">
-        <router-link class="navbar-brand" to="/">Will-Be-Doing</router-link>
-      </div>
+    <nav class="navbar navbar-dark bg-dark">
+      <router-link class="navbar-brand" to="/">Will-Be-Doing</router-link>
     </nav>
     <router-view class="pt-2" />
   </div>
@@ -12,6 +10,6 @@
 <style>
 #app {
   text-align: center;
-  background-color: #fcfcfc;
+  background-color: #fff;
 }
 </style>
